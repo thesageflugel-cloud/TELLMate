@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tellmate — Movies & TV</title>
+
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <!-- Logo clickable -> Home -->
+      <a id="logoLink" class="logo" href="#home"><span class="logo-red">TELL</span><span class="logo-white">Mate</span></a>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="#home" class="nav-link" data-target="home">HOME</a>
+        <a href="#search" class="nav-link" data-target="search">SEARCH</a>
+        <a href="#movies" class="nav-link" data-target="movies">MOVIE</a>
+        <a href="#series" class="nav-link" data-target="series">SERIES</a>
+        <a href="#watchlist" class="nav-link" data-target="watchlist">WATCHLIST</a>
+      </nav>
+
+      <!-- global search (header) -->
+      <div id="headerSearchWrap" class="header-search collapsed" role="search" aria-label="Global search">
+        <input id="globalSearch" type="search" placeholder="Search movies & TV — press / to focus" autocomplete="off" />
+        <button id="openSearch" class="icon-inside-search" title="Open Search">🔍</button>
+        <button id="globalClear" title="Clear search">✕</button>
+
+        <div id="suggestions" class="suggestions" role="listbox" hidden></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="main-root">
+    <!-- HOME -->
+    <section id="home" class="page section-active" data-page="home">
+      <div class="hero-slider-wrap">
+        <div id="heroSlider" class="hero-slider" aria-hidden="false"></div>
+        <button class="hero-nav hero-prev" id="heroPrev" aria-label="Prev">‹</button>
+        <button class="hero-nav hero-next" id="heroNext" aria-label="Next">›</button>
+        <div id="heroDots" class="hero-dots" aria-hidden="false"></div>
+      </div>
+
+      <section class="content-row">
+        <div class="container row-header"><h2>Trending Movies</h2></div>
+        <div class="container cards-wrap">
+          <button class="row-scroll row-prev" data-target="trendingMovies" aria-label="Scroll left">‹</button>
+          <div class="cards-row-outer"><div id="trendingMovies" class="cards-row" tabindex="0"></div></div>
+          <button class="row-scroll row-next" data-target="trendingMovies" aria-label="Scroll right">›</button>
+        </div>
+      </section>
+
+      <section class="content-row">
+        <div class="container row-header"><h2>Trending TV Shows</h2></div>
+        <div class="container cards-wrap">
+          <button class="row-scroll row-prev" data-target="trendingTV" aria-label="Scroll left">‹</button>
+          <div class="cards-row-outer"><div id="trendingTV" class="cards-row" tabindex="0"></div></div>
+          <button class="row-scroll row-next" data-target="trendingTV" aria-label="Scroll right">›</button>
+        </div>
+      </section>
+    </section>
+
+    <!-- SEARCH -->
+    <section id="search" class="page section-hidden" data-page="search">
+      <div class="container" style="padding-top:36px;">
+        <h1>Search</h1>
+
+        <div class="filters">
+          <div class="filter-group">
+            <label for="searchYearFilter">Year</label>
+            <select id="searchYearFilter"><option value="">All years</option></select>
+          </div>
+          <div class="filter-group">
+            <label for="searchGenreFilter">Genre</label>
+            <select id="searchGenreFilter"><option value="">All genres</option></select>
+          </div>
+          <div class="filter-actions">
+            <button id="searchClearFilters" class="btn-clear">⟲ Clear Filters</button>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;">
+          <div class="search-bar internal" style="flex:1;">
+            <input id="searchInput" type="search" placeholder="Search movies, series..." aria-label="Search internal">
+          </div>
+        </div>
+
+        <div id="searchResults" class="grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- MOVIES -->
+    <section id="movies" class="page section-hidden" data-page="movies">
+      <div class="container" style="padding-top:36px;">
+        <h1>Movies</h1>
+        <div class="filters">
+          <div class="filter-group">
+            <label for="moviesYearFilter">Year</label>
+            <select id="moviesYearFilter"><option value="">All years</option></select>
+          </div>
+          <div class="filter-group">
+            <label for="moviesGenreFilter">Genre</label>
+            <select id="moviesGenreFilter"><option value="">All genres</option></select>
+          </div>
+          <div class="filter-actions">
+            <button id="moviesClearFilters" class="btn-clear">⟲ Clear Filters</button>
+          </div>
+        </div>
+
+        <div id="moviesGrid" class="grid"></div>
+      </div>
+    </section>
+
+    <!-- SERIES -->
+    <section id="series" class="page section-hidden" data-page="series">
+      <div class="container" style="padding-top:36px;">
+        <h1>Series</h1>
+        <div class="filters">
+          <div class="filter-group">
+            <label for="seriesYearFilter">Year</label>
+            <select id="seriesYearFilter"><option value="">All years</option></select>
+          </div>
+          <div class="filter-group">
+            <label for="seriesGenreFilter">Genre</label>
+            <select id="seriesGenreFilter"><option value="">All genres</option></select>
+          </div>
+          <div class="filter-actions">
+            <button id="seriesClearFilters" class="btn-clear">⟲ Clear Filters</button>
+          </div>
+        </div>
+
+        <div id="seriesGrid" class="grid"></div>
+      </div>
+    </section>
+
+    <!-- DETAIL / SYNOPSIS PAGE (no back button) -->
+    <section id="detail" class="page section-hidden" data-page="detail">
+      <div class="container" style="padding-top:36px;">
+        <div class="detail-top" id="detailTop">
+          <div class="detail-poster" id="detailPoster"><img src="" alt="poster"></div>
+          <div class="detail-meta">
+            <h1 id="detailTitle">Title</h1>
+            <div class="detail-badges">
+              <span class="badge rating" id="detailRating">⭐ 0.0</span>
+              <span class="badge year" id="detailYear">—</span>
+              <span class="badge type" id="detailType">Movie</span>
+            </div>
+            <p id="detailShort" class="detail-short">Short synopsis goes here.</p>
+
+            <div class="detail-buttons">
+              <button id="detailPlay" class="btn primary">Play</button>
+              <button id="detailAdd" class="btn outline">+ Add to Watchlist</button>
+              <button id="detailShare" class="btn outline">Share</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-tabs">
+          <button class="tab active" data-tab="overview">Overview</button>
+          <button class="tab" data-tab="watch">Where to watch</button>
+        </div>
+
+        <div class="detail-body">
+          <div id="detailOverview" class="detail-panel">
+            <h3>Overview</h3>
+            <p id="detailOverviewText">Detailed synopsis and additional credits will appear here.</p>
+            <ul class="meta-list" id="detailMetaList"></ul>
+          </div>
+
+          <div id="detailWatch" class="detail-panel" style="display:none;">
+            <h3>Where to watch</h3>
+            <div id="providersList" class="providers-list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WATCHLIST -->
+    <section id="watchlist" class="page section-hidden" data-page="watchlist">
+      <div class="container" style="padding-top:36px;">
+        <h1>Your Watchlist</h1>
+        <p class="muted" id="watchCount">You have 0 items in your watchlist</p>
+        <div id="watchGrid" class="grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container"><p>© <strong>Tellmate</strong></p></div>
+  </footer>
+
+  <div id="tell-toast" aria-hidden="true"></div>
+
+  <!-- app -->
+  <script src="script.js" defer></script>
+</body>
+</html>
